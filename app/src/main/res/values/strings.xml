@@ -8,6 +8,13 @@
     <string name="forwarder_service">Forwarder Service</string>
     <string name="status_running">Running</string>
     <string name="status_stopped">Stopped</string>
+    <string name="server_sees_phone">Server sees this phone: %s</string>
+    <string name="server_status_online">Online</string>
+    <string name="server_status_offline">Offline</string>
+    <string name="server_status_unknown">Unknown</string>
+    <string name="last_ping_format">Last ping: %s</string>
+    <string name="last_ping_never">Last ping: Never</string>
+
     <string name="forwarded_today">Forwarded Today</string>
     <string name="provider_bkash">bKash</string>
     <string name="provider_nagad">Nagad</string>
@@ -24,12 +31,16 @@
     <string name="server_configuration">Server Configuration</string>
     <string name="webhook_url_label">Webhook URL</string>
     <string name="gateway_key_label">Gateway Key</string>
+    <string name="device_id_label">Device ID</string>
+    <string name="device_id_hint">One id per phone, e.g. phone1</string>
+    <string name="device_id_required">Device ID is required</string>
+    <string name="device_id_invalid">Device ID must contain only lowercase letters, numbers, and dashes (e.g. phone1)</string>
+    <string name="enter_device_id_first">Enter a Device ID first</string>
+
     <string name="save_settings">Save Settings</string>
     <string name="settings_saved">Settings saved successfully</string>
     <string name="test_connection">Test Connection</string>
     <string name="testing_connection">Testing connection...</string>
-    <string name="test_connection_success">Connection test passed (HTTP %d OK)</string>
-    <string name="test_connection_failed">Connection test failed: %s</string>
 
     <string name="permissions_status">Permissions &amp; Battery</string>
     <string name="perm_sms">SMS Permission</string>
@@ -46,7 +57,7 @@
     <string name="optimize_disable">Disable</string>
 
     <string name="about_title">About</string>
-    <string name="app_version">DT SMS Forwarder v1.0</string>
+    <string name="app_version">DT SMS Forwarder v1.1</string>
     <string name="about_description">Forwards only bKash / Nagad / Rocket SMS to your own server.</string>
 
     <!-- Notifications -->

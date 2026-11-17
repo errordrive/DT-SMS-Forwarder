@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitaltrainer.payments.R
+import com.digitaltrainer.payments.data.PreferenceManager
 import com.digitaltrainer.payments.data.SmsLog
 import com.digitaltrainer.payments.databinding.DialogLogDetailBinding
 import com.digitaltrainer.payments.databinding.FragmentHomeBinding
@@ -33,6 +34,7 @@ class HomeFragment : Fragment() {
     private lateinit var logAdapter: SmsLogAdapter
 
     private val timeFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+    private val pingTimeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +51,11 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         setupSwitch()
         observeViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshPingStatus()
     }
 
     private fun setupRecyclerView() {
@@ -81,6 +88,36 @@ class HomeFragment : Fragment() {
                 binding.tvStatusText.text = getString(R.string.status_stopped)
                 binding.tvStatusText.setTextColor(Color.parseColor("#808285")) // secondary
                 binding.ivStatusDot.setImageResource(R.drawable.ic_status_stopped)
+            }
+        }
+
+        // §6 Server Online State
+        viewModel.serverOnlineState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                PreferenceManager.STATE_ONLINE -> {
+                    binding.tvServerStatus.text = getString(R.string.server_sees_phone, getString(R.string.server_status_online))
+                    binding.tvServerStatus.setTextColor(Color.parseColor("#16A34A"))
+                    binding.ivServerStatusDot.setImageResource(R.drawable.ic_status_running)
+                }
+                PreferenceManager.STATE_OFFLINE -> {
+                    binding.tvServerStatus.text = getString(R.string.server_sees_phone, getString(R.string.server_status_offline))
+                    binding.tvServerStatus.setTextColor(Color.parseColor("#DC2626"))
+                    binding.ivServerStatusDot.setImageResource(R.drawable.ic_status_stopped)
+                }
+                else -> {
+                    binding.tvServerStatus.text = getString(R.string.server_sees_phone, getString(R.string.server_status_unknown))
+                    binding.tvServerStatus.setTextColor(Color.parseColor("#808285"))
+                    binding.ivServerStatusDot.setImageResource(R.drawable.ic_status_stopped)
+                }
+            }
+        }
+
+        viewModel.lastPingTime.observe(viewLifecycleOwner) { stamp ->
+            if (stamp != null && stamp > 0L) {
+                val formatted = pingTimeFormat.format(Date(stamp))
+                binding.tvLastPing.text = getString(R.string.last_ping_format, formatted)
+            } else {
+                binding.tvLastPing.text = getString(R.string.last_ping_never)
             }
         }
 

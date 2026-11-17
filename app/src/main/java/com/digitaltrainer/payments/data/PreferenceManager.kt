@@ -18,8 +18,15 @@ class PreferenceManager(context: Context) {
         private const val KEY_SERVICE_RUNNING = "key_service_running"
         private const val KEY_WEBHOOK_URL = "key_webhook_url"
         private const val KEY_GATEWAY_KEY = "key_gateway_key"
+        private const val KEY_DEVICE_ID = "key_device_id"
+        private const val KEY_LAST_PING_TIME = "key_last_ping_time"
+        private const val KEY_LAST_ONLINE_STATE = "key_last_online_state"
 
         const val DEFAULT_WEBHOOK_URL = "https://digital-trainer-api.a2nnajmul.workers.dev/api/sms/gateway"
+
+        const val STATE_UNKNOWN = "UNKNOWN"
+        const val STATE_ONLINE = "ONLINE"
+        const val STATE_OFFLINE = "OFFLINE"
 
         private fun createEncryptedPrefs(context: Context): SharedPreferences {
             return try {
@@ -59,5 +66,23 @@ class PreferenceManager(context: Context) {
         get() = sharedPreferences.getString(KEY_GATEWAY_KEY, "") ?: ""
         set(value) {
             sharedPreferences.edit().putString(KEY_GATEWAY_KEY, value.trim()).apply()
+        }
+
+    var deviceId: String
+        get() = sharedPreferences.getString(KEY_DEVICE_ID, "") ?: ""
+        set(value) {
+            sharedPreferences.edit().putString(KEY_DEVICE_ID, value.trim().lowercase()).apply()
+        }
+
+    var lastPingTime: Long
+        get() = sharedPreferences.getLong(KEY_LAST_PING_TIME, 0L)
+        set(value) {
+            sharedPreferences.edit().putLong(KEY_LAST_PING_TIME, value).apply()
+        }
+
+    var lastOnlineState: String
+        get() = sharedPreferences.getString(KEY_LAST_ONLINE_STATE, STATE_UNKNOWN) ?: STATE_UNKNOWN
+        set(value) {
+            sharedPreferences.edit().putString(KEY_LAST_ONLINE_STATE, value).apply()
         }
 }

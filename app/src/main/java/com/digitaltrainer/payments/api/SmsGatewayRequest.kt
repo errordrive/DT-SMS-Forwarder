@@ -16,5 +16,8 @@ data class SmsGatewayRequest(
     val receivedStamp: Long,
 
     @SerializedName("sim")
-    val sim: String
+    val sim: String,
+
+    @SerializedName("device")
+    val device: String
 )

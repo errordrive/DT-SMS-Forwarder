@@ -1,10 +1,14 @@
-# DT SMS Forwarder (Android)
+# DT SMS Forwarder (Android) — v1.1
 
 Minimal, lightweight SMS forwarder Android app for the **Digital Trainer** online course store (Bangladesh).
 
-The app does ONE thing only: forward payment SMS received on the owner's phone to his own server. Nothing else.
+The app forwards payment SMS received on the owner's phone to his own server and maintains online status via a 5-minute heartbeat ping for multi-account gateways.
 
-## Features & Privacy Rules
+## Features & Privacy Rules (v1.1)
+- **Multi-Account Gateway & Device ID (§2)**: Unique Device ID per phone (e.g., `phone1`, `phone2`) identifying each phone to the server.
+- **Heartbeat Ping (§4)**: Sends automatic 5-minute heartbeat ping (`GET /api/devices/ping?key=<KEY>&device=<ID>`) so the store gateway knows which phones are online to distribute orders evenly.
+- **Online Status Indicator (§6)**: Shows real-time server presence (`Server sees this phone: Online` / `Offline` / `Unknown`) with last ping timestamp directly on Home.
+- **Dual Test Connection (§7)**: Tests both Gateway POST and Heartbeat GET endpoints with instant feedback.
 - **Strict Sender Filtering**: Forwards SMS **only** from exact senders:
   - `bKash` (bKash payment SMS)
   - `NAGAD` (Nagad payment SMS)
@@ -13,7 +17,7 @@ The app does ONE thing only: forward payment SMS received on the owner's phone t
 - **Offline Resilient**: Local Room database queues payment SMS when offline or when network errors occur, deduping by `(from, text, sentStamp)`.
 - **WorkManager Auto-Retry**: Automatically retries failed/pending SMS up to 10 attempts with exponential backoff whenever network connectivity is restored.
 - **Foreground Service**: Persistent foreground service with auto-restart on device reboot (`BOOT_COMPLETED`).
-- **Secure Credentials**: Webhook URL and Gateway Key stored using `EncryptedSharedPreferences`.
+- **Secure Credentials**: Webhook URL, Gateway Key, and Device ID stored using `EncryptedSharedPreferences`.
 - **Brand Assets**: Embedded official transparent vector/PNG logos for bKash, Nagad, and Rocket at exact required display sizes (28dp for counters, 24dp for log entries).
 - **Target APK Size**: Under 6 MB with R8 `minifyEnabled` + `shrinkResources`. Debug-signed release APK ready for direct sideloading.
 

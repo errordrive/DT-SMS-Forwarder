@@ -12,15 +12,16 @@ class SmsGatewayRequestTest {
     private val gson = Gson()
 
     @Test
-    fun testJsonPayloadStructure_MatchesServerContract() {
-        // §3 contract: {"from":"bKash","text":"<full SMS text>","sentStamp":1763400000000,"receivedStamp":1763400001000,"sim":"sim1"}
+    fun testJsonPayloadStructure_MatchesServerContract_v1_1() {
+        // §5 contract: {"from":"bKash","text":"<full SMS text>","sentStamp":1763400000000,"receivedStamp":1763400001000,"sim":"sim1","device":"phone1"}
         val sampleText = "You have received Tk 100.00 from 01580471306. Fee Tk 0.00. Balance Tk 532.20. TrxID DI445VCEIE at 04/09/2026 18:06"
         val request = SmsGatewayRequest(
             from = "bKash",
             text = sampleText,
             sentStamp = 1763400000000L,
             receivedStamp = 1763400001000L,
-            sim = "sim1"
+            sim = "sim1",
+            device = "phone1"
         )
 
         val jsonString = gson.toJson(request)
@@ -31,13 +32,15 @@ class SmsGatewayRequestTest {
         assertEquals(1763400000000L, json.getLong("sentStamp"))
         assertEquals(1763400001000L, json.getLong("receivedStamp"))
         assertEquals("sim1", json.getString("sim"))
+        assertEquals("phone1", json.getString("device"))
 
-        // Exact keys present
+        // Exact keys present (now 6 keys including device)
         assertTrue(json.has("from"))
         assertTrue(json.has("text"))
         assertTrue(json.has("sentStamp"))
         assertTrue(json.has("receivedStamp"))
         assertTrue(json.has("sim"))
-        assertEquals(5, json.length())
+        assertTrue(json.has("device"))
+        assertEquals(6, json.length())
     }
 }
