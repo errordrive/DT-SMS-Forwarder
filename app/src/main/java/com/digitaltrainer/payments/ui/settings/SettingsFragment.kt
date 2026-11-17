@@ -69,6 +69,23 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupListeners() {
+        binding.btnCopyDeviceId.setOnClickListener {
+            val deviceId = binding.etDeviceId.text?.toString()?.trim() ?: ""
+            if (deviceId.isNotEmpty()) {
+                val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                val clip = android.content.ClipData.newPlainText("Device ID", deviceId)
+                clipboard.setPrimaryClip(clip)
+                Toast.makeText(requireContext(), getString(R.string.device_id_copied, deviceId), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.btnRegenerateDeviceId.setOnClickListener {
+            val newId = viewModel.generateNewDeviceId()
+            binding.etDeviceId.setText(newId)
+            binding.tilDeviceId.error = null
+            Toast.makeText(requireContext(), "Generated: $newId", Toast.LENGTH_SHORT).show()
+        }
+
         binding.btnSaveSettings.setOnClickListener {
             val url = binding.etWebhookUrl.text?.toString()?.trim() ?: ""
             val key = binding.etGatewayKey.text?.toString()?.trim() ?: ""

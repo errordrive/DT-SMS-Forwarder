@@ -54,6 +54,7 @@ class UrlHelperTest {
         assertEquals("phone2", UrlHelper.sanitizeAndValidateDeviceId("  PHONE2  ").getOrThrow())
         assertEquals("shop-phone", UrlHelper.sanitizeAndValidateDeviceId("shop-phone").getOrThrow())
         assertEquals("bkash-01", UrlHelper.sanitizeAndValidateDeviceId("BKASH-01").getOrThrow())
+        assertEquals("phone-a7b3", UrlHelper.sanitizeAndValidateDeviceId("phone-a7b3").getOrThrow())
     }
 
     @Test

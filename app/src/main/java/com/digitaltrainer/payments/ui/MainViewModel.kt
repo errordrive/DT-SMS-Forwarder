@@ -59,6 +59,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getDeviceId(): String = prefManager.deviceId
 
+    fun generateNewDeviceId(): String {
+        val newId = prefManager.generateDefaultDeviceId()
+        prefManager.deviceId = newId
+        return newId
+    }
+
     fun saveSettings(url: String, key: String, deviceId: String): Result<Unit> {
         val deviceIdValidation = UrlHelper.sanitizeAndValidateDeviceId(deviceId)
         if (deviceIdValidation.isFailure) {

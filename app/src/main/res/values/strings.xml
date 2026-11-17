@@ -32,10 +32,14 @@
     <string name="webhook_url_label">Webhook URL</string>
     <string name="gateway_key_label">Gateway Key</string>
     <string name="device_id_label">Device ID</string>
-    <string name="device_id_hint">One id per phone, e.g. phone1</string>
+    <string name="device_id_hint">Auto-generated or custom, e.g. phone1</string>
     <string name="device_id_required">Device ID is required</string>
     <string name="device_id_invalid">Device ID must contain only lowercase letters, numbers, and dashes (e.g. phone1)</string>
     <string name="enter_device_id_first">Enter a Device ID first</string>
+    <string name="copy_device_id">Copy Device ID</string>
+    <string name="copy">Copy</string>
+    <string name="device_id_copied">Device ID copied to clipboard: %s</string>
+    <string name="regenerate_id">New ID</string>
 
     <string name="save_settings">Save Settings</string>
     <string name="settings_saved">Settings saved successfully</string>

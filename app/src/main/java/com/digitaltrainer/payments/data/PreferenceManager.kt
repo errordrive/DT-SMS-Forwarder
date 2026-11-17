@@ -69,10 +69,23 @@ class PreferenceManager(context: Context) {
         }
 
     var deviceId: String
-        get() = sharedPreferences.getString(KEY_DEVICE_ID, "") ?: ""
+        get() {
+            var id = sharedPreferences.getString(KEY_DEVICE_ID, "")?.trim()?.lowercase() ?: ""
+            if (id.isEmpty()) {
+                // Auto-generate clean unique device ID on first install/launch: e.g. phone-a7b3
+                id = generateDefaultDeviceId()
+                sharedPreferences.edit().putString(KEY_DEVICE_ID, id).apply()
+            }
+            return id
+        }
         set(value) {
             sharedPreferences.edit().putString(KEY_DEVICE_ID, value.trim().lowercase()).apply()
         }
+
+    fun generateDefaultDeviceId(): String {
+        val randomSuffix = java.util.UUID.randomUUID().toString().replace("-", "").take(4).lowercase()
+        return "phone-$randomSuffix"
+    }
 
     var lastPingTime: Long
         get() = sharedPreferences.getLong(KEY_LAST_PING_TIME, 0L)
