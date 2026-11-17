@@ -11,6 +11,8 @@ jobs:
   build:
     name: Build & Test Release APK
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout Code
@@ -52,3 +54,21 @@ jobs:
           name: DT-SMS-Forwarder-Release-APK
           path: app/build/outputs/apk/release/*.apk
           retention-days: 30
+
+      - name: Create or Update GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          tag_name: v1.1
+          name: DT SMS Forwarder v1.1 (Multi-Account Gateway)
+          body: |
+            ## DT SMS Forwarder v1.1
+            - **Auto-generated Device ID**: Pre-generates unique device ID on install with a one-tap Copy button and regenerate option.
+            - **Native Switch UI**: Fixed forwarder service toggle layout clipping for 100% native display across all screen sizes and densities.
+            - **Heartbeat Ping**: Automatic 5-minute heartbeat ping for real-time online state.
+            - **Home Status Indicator**: Shows server online presence and last ping timestamp.
+            - **Dual Test Connection**: Tests both Gateway POST and Heartbeat GET endpoints.
+            - **Debug-signed**: Ready for direct installation.
+          files: app/build/outputs/apk/release/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
