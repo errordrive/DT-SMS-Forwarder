@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DT SMS Forwarder</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home -->
+    <string name="forwarder_service">Forwarder Service</string>
+    <string name="status_running">Running</string>
+    <string name="status_stopped">Stopped</string>
+    <string name="forwarded_today">Forwarded Today</string>
+    <string name="provider_bkash">bKash</string>
+    <string name="provider_nagad">Nagad</string>
+    <string name="provider_rocket">Rocket</string>
+    <string name="last_forwarded_never">Last forwarded: Never</string>
+    <string name="last_forwarded_format">Last forwarded: %s</string>
+    <string name="recent_activity">Recent Logs</string>
+    <string name="no_logs_yet">No SMS forwarded or queued yet.</string>
+    <string name="status_sent">Sent</string>
+    <string name="status_queued">Queued</string>
+    <string name="status_failed">Failed</string>
+
+    <!-- Settings -->
+    <string name="server_configuration">Server Configuration</string>
+    <string name="webhook_url_label">Webhook URL</string>
+    <string name="gateway_key_label">Gateway Key</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="settings_saved">Settings saved successfully</string>
+    <string name="test_connection">Test Connection</string>
+    <string name="testing_connection">Testing connection...</string>
+    <string name="test_connection_success">Connection test passed (HTTP %d OK)</string>
+    <string name="test_connection_failed">Connection test failed: %s</string>
+
+    <string name="permissions_status">Permissions &amp; Battery</string>
+    <string name="perm_sms">SMS Permission</string>
+    <string name="perm_sms_desc">Required to receive incoming payment SMS.</string>
+    <string name="perm_notifications">Notifications</string>
+    <string name="perm_notifications_desc">Required for background service and payment alerts.</string>
+    <string name="perm_battery">Battery Optimization</string>
+    <string name="perm_battery_desc">Must be unrestricted so Android doesn\'t kill the background forwarder.</string>
+    <string name="perm_granted">Granted</string>
+    <string name="perm_missing">Missing</string>
+    <string name="perm_unrestricted">Unrestricted</string>
+    <string name="perm_restricted">Restricted</string>
+    <string name="grant">Grant</string>
+    <string name="optimize_disable">Disable</string>
+
+    <string name="about_title">About</string>
+    <string name="app_version">DT SMS Forwarder v1.0</string>
+    <string name="about_description">Forwards only bKash / Nagad / Rocket SMS to your own server.</string>
+
+    <!-- Notifications -->
+    <string name="fg_channel_name">DT Forwarder Service</string>
+    <string name="fg_channel_desc">Persistent notification while SMS forwarder is active.</string>
+    <string name="fg_notification_text">DT SMS Forwarder is running</string>
+    <string name="alert_channel_name">Payment Forwarded Alerts</string>
+    <string name="alert_channel_desc">Alerts when a payment SMS is successfully forwarded.</string>
+</resources>
