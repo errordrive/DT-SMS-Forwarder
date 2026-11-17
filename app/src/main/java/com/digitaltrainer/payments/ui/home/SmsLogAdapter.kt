@@ -29,23 +29,19 @@ class SmsLogAdapter(
     }
 
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val item = getItem(position)
+        holder.bind(item)
     }
 
     inner class LogViewHolder(
         private val binding: ItemSmsLogBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            binding.root.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    onItemClick(getItem(position))
-                }
-            }
-        }
-
         fun bind(item: SmsLog) {
+            binding.root.setOnClickListener {
+                onItemClick(item)
+            }
+
             // Logo (§9A: 24dp at the left of each entry)
             val logoRes = ProviderFilter.getLogoDrawableRes(item.from)
             binding.ivProviderLogo.setImageResource(logoRes)
