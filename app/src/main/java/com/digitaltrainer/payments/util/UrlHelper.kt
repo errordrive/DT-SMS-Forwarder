@@ -1,7 +1,5 @@
 package com.digitaltrainer.payments.util
 
-import android.net.Uri
-
 object UrlHelper {
 
     private val DEVICE_ID_REGEX = Regex("^[a-z0-9-]+$")
@@ -34,9 +32,8 @@ object UrlHelper {
     fun buildGatewayUrl(baseUrl: String, key: String, deviceId: String): String {
         val trimmedBase = baseUrl.trim()
         val sep = if (trimmedBase.contains("?")) "&" else "?"
-        val encodedKey = Uri.encode(key)
-        val encodedDevice = Uri.encode(deviceId.trim().lowercase())
-        return "$trimmedBase${sep}key=$encodedKey&device=$encodedDevice"
+        val cleanDevice = deviceId.trim().lowercase()
+        return "$trimmedBase${sep}key=$key&device=$cleanDevice"
     }
 
     /**
@@ -45,19 +42,18 @@ object UrlHelper {
      */
     fun buildPingUrl(webhookBaseUrl: String, key: String, deviceId: String): String {
         val trimmed = webhookBaseUrl.trim()
+        val cleanDevice = deviceId.trim().lowercase()
         val pingBase = if (trimmed.contains("/api/sms/gateway")) {
             trimmed.replace("/api/sms/gateway", "/api/devices/ping")
         } else {
-            val uri = Uri.parse(trimmed)
-            val scheme = uri.scheme ?: "https"
-            val host = uri.host ?: "digital-trainer-api.a2nnajmul.workers.dev"
-            val portPart = if (uri.port != -1) ":${uri.port}" else ""
-            "$scheme://$host$portPart/api/devices/ping"
+            val schemeEnd = trimmed.indexOf("://")
+            val hostStart = if (schemeEnd != -1) schemeEnd + 3 else 0
+            val pathStart = trimmed.indexOf('/', hostStart)
+            val domain = if (pathStart != -1) trimmed.substring(0, pathStart) else trimmed
+            "$domain/api/devices/ping"
         }
 
         val sep = if (pingBase.contains("?")) "&" else "?"
-        val encodedKey = Uri.encode(key)
-        val encodedDevice = Uri.encode(deviceId.trim().lowercase())
-        return "$pingBase${sep}key=$encodedKey&device=$encodedDevice"
+        return "$pingBase${sep}key=$key&device=$cleanDevice"
     }
 }
